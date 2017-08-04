@@ -1,11 +1,4 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.3'
-    }
-}
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'com.bmuschko.tomcat'
@@ -17,23 +10,27 @@ version = '1.0'
 war.baseName = 'accounting'
 // Web directory, this overrides the default value "webapp"
 project.webAppDirName = 'WebContent'
- 
+
 repositories {
     mavenLocal()
     mavenCentral()
 }
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.3'
+    }
+}
 dependencies {
     testCompile 'junit:junit:4.12'
     compile 'junit:junit:4.12'
-}
-// dependencies to run on tomcat, are mandatory for tomcat plugin
-dependencies {
     def tomcatVersion = '8.5.16'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
-
 tomcat {
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
     ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
